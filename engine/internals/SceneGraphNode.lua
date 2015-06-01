@@ -1,6 +1,6 @@
-local SceneGraphNode = BaseSceneObject:extends()
+local SceneGraphNode = class()
 
-function SceneGraphNode:__init(scene, parent, ...)
+function SceneGraphNode:__init(is_scene, scene, parent, ...)
     -- Child objects
     self._children = {
         all = {},
@@ -8,8 +8,9 @@ function SceneGraphNode:__init(scene, parent, ...)
         by_class = {},
         by_tag = {}
     }
-    self._parent = parent or nil
+    self._parent = parent
     self._scene = scene
+    self._is_scene = is_scene
 end
 
 
@@ -19,13 +20,18 @@ function SceneGraphNode:addChild(ObjectType, ...)
         SceneObject.is(ObjectType, SceneObject),
         "Only SceneObject subclasses can be added as children"
     )
-    local object = ObjectType(self._scene, self, ...)
+    local object
+    if self._is_scene then
+        object = ObjectType(self, nil, ...)
+    else
+        object = ObjectType(self._scene, self, ...)
+    end
     
     -- Store object in "all objects" table
     self._children.all[object] = object
     
     -- Store object by its type
-    self._children.by_class[ObjectType][object] = self._children.by_class[ObjectType][object] or {}
+    self._children.by_class[ObjectType] = self._children.by_class[ObjectType] or {}
     self._children.by_class[ObjectType][object] = object
     
     -- Store object by its ID

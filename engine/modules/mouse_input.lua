@@ -32,7 +32,7 @@ function mouse_input.mousepressed(x, y, button)
     mouse_input._pressed[button] = true
     mouse_input._just_pressed[button] = true
     
-    mouse.input.x = x; mouse.input.y = y
+    mouse_input.x = x; mouse_input.y = y
 end
 
 function mouse_input.mousereleased(x, y, button)
@@ -40,17 +40,13 @@ function mouse_input.mousereleased(x, y, button)
     mouse_input._pressed[button] = false
     mouse_input._just_released[button] = true
     
-    mouse.input.x = x; mouse.input.y = y
+    mouse_input.x = x; mouse_input.y = y
 end
 
 
 function mouse_input.mousemoved(x, y, dx, dy)
-    button = mouse_input.mcode_to_name(button)
-    mouse_input._pressed[button] = false
-    mouse_input._just_released[button] = true
-    
-    mouse.input.x = x; mouse.input.y = y
-    mouse.input.dx = dx; mouse.input.dy = dy
+    mouse_input.x = x; mouse_input.y = y
+    mouse_input.dx = dx; mouse_input.dy = dy
 end
 
 function mouse_input.update(dt)

@@ -27,7 +27,7 @@ function string.gsplit(str, sep, store_separator)
 
         if s_start == nil then return t end
         table.insert(t, string.sub(str, 1, s_start - 1))
-        if store_separator then table.insert(t, string.sub(str, s_start, s_end))
+        if store_separator then table.insert(t, string.sub(str, s_start, s_end)) end
         str = string.sub(str, s_end + 1)
     end
 end
@@ -79,7 +79,7 @@ end
 
 -- Check if condition is true, and if not, throw an error with message at given level(defaults to 1)
 function error_check(condition, message, level)
-    return condition or error(message, level or 1)
+    return condition or error(message, (level or 1) + 1)
 end
 
 

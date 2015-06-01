@@ -1,83 +1,85 @@
--- Load essentials into the global scope
+-- This is only necessary within the module
+rosa_prefix = ({...})[1] .. "."
+local p = rosa_prefix
 
-require "utils" -- Various utility functions
+-- Modified love.run, with support for multiple callbacks and error handling
+runman = require(p.."lib.modrun").setup()
+
+-- Miscellaneous utilities
+require(p.."utils") 
+Color = require(p.."Color")
 
 -- Class system
-class = require "lib.30log-llama"
+class = require(p.."lib.30log-llama")
 
--- Tweening, e.g. smoothly transitioning from one state to another
-tween = require "lib.flux.flux"
+-- Tweening, e.g. smoothly transitioning from one (numerical)state to another, such as position or rotation
+tween = require(p.."lib.flux.flux")
 
--- Base classes
-Scene = require "Scene"
-SceneObject = require "SceneObject"
+
+-- Base types
+Camera = require(p.."Camera")
+Scene = require(p.."Scene")
+SceneObject = require(p.."SceneObject")
 
 -- Components
-Component = require "components.Component"
-Behavior = require "components.Behavior"
-PhysicsBody = require "components.PhysicsBody"
-PhysicsShape = require "components.PhysicsShape"
+BaseComponent = require(p.."components.BaseComponent")
+BaseBehavior = require(p.."components.BaseBehavior")
+
+PhysicsBody = require(p.."components.PhysicsBody")
+PhysicsShape = require(p.."components.PhysicsShape")
+
+BaseDrawable = require(p.."components.BaseDrawable")
+Drawable = require(p.."components.Drawable")
+Sprite = require(p.."components.Sprite")
 
 -- Systems
-System = require "systems.System"
-PhysicsSystem = require "systems.PhysicsSystem"
+BaseSystem = require(p.."systems.BaseSystem")
+PhysicsSystem = require(p.."systems.PhysicsSystem")
+RenderingSystem = require(p.."systems.RenderingSystem")
 
 -- Load core modules and utilities
-sceneman = require "modules.scene_manager"
-resman = require "modules.resource_manager"
+sceneman = require(p.."modules.scene_manager")
+resman = require(p.."modules.resource_manager")
+projman = require(p.."modules.project_manager")
 -- Keyboard and mouse input utilities
-keyboard = require "modules.keyboard_input"
-mouse = require "modules.mouse_input"
+keyboard = require(p.."modules.keyboard_input")
+mouse = require(p.."modules.mouse_input")
 
 -- Configure Love2D and setup callbacks
 love.keyboard.setKeyRepeat(false)
 math.randomseed(os.time())
 
-function love.keypressed(key, isrepeat)
-    keyboard.keypressed(key, isrepeat)
-    
-    if keyboard.isPressed("alt") then
-        if key == "f12" then
-            filename = "screenshot_" .. os.time() .. ".png"
-            screenshot = love.graphics.newScreenshot( true )
-            screenshot:encode(filename)
-            print("Saved screenshot: " .. filename)
+local function dispatchEvent(event, ...)
+    if event == "keypressed" then
+        local key, isrepeat = ...
+        if keyboard.isPressed("alt") then
+            if key == "f12" then
+                filename = "screenshot_" .. os.time() .. ".png"
+                screenshot = love.graphics.newScreenshot( true )
+                screenshot:encode(filename)
+                print("Saved screenshot: " .. filename)
+            end
         end
+        keyboard.keypressed(...)
+    elseif event == "keyreleased" then
+        keyboard.keyreleased(...)
+    elseif event == "mousepressed" then
+        mouse.mousepressed(...)
+    elseif event == "mousereleased" then
+        mouse.mousereleased(...)
+    elseif event == "mousemoved" then
+        mouse.mousemoved(...)
+    elseif event == "update" then
+        keyboard.update(...)
+        mouse.update(...)
+        
+        tween.update(...)
     end
-end
-function love.keyreleased(key)
-    keyboard.keyreleased(key)
-end
-
-function love.mousepressed(button, x, y)
-    mouse.mousepressed(button, x, y)
-end
-function love.mousepressed(button, x, y)
-    mouse.mousereleased(button, x, y)
-end
-function love.mousemoved(x, y, dx, dy)
-    mouse.mousemoved(x, y, dx, dy)
-end
-
-function love.update(dt)
-    keyboard.update(dt)
-    mouse.update(dt)
     
-    tween.update(dt)
-    
-    sceneman.update(dt)
+    sceneman.dispatchEvent(event, ...)
 end
 
-function love.draw()
-    sceneman.draw()
-end
-
-
-
-function loadProject(path)
-    resman.base_path = path .. "/"
-    require(string.gsub(path, "/", ".") .. ".main")
-end
+runman.addCallback("dispatch", dispatchEvent)
 
 -- TODO: Think about using external modules, e.g.:
 --     GUI:

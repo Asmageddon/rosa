@@ -1,5 +1,3 @@
-function love.load()
-    require "engine"
-    
-    loadProject("Game")
-end
+require "engine"
+
+projman.loadProject("ExampleGame")

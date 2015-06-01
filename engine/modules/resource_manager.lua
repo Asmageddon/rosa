@@ -18,7 +18,7 @@ function resource_manager.getImage(path)
     end
     
     -- Since by now the image is either loaded, or an error occurred, just return
-    return images[specifier]
+    return images[path]
 end
 
 function resource_manager.getShader(path)
@@ -32,5 +32,8 @@ function resource_manager.getShader(path)
     
     return shaders[path]
 end
+
+-- TODO: Reloading resources
+function resource_manager.update(dt) end
 
 return resource_manager

@@ -1,4 +1,6 @@
-local BehaviorSystem = System:extends()
+local BehaviorSystem = BaseSystem:extends()
+
+BehaviorSystem.type_id = "BehaviorSystem"
 
 function BehaviorSystem:initialize()
     self.paused = false
