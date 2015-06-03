@@ -2,7 +2,7 @@ local SceneGraphNode = require(rosa_prefix.."internals.SceneGraphNode")
 
 local SceneObject = SceneGraphNode:extends()
 
-function SceneObject:__init(scene, parent, ...)
+function SceneObject:__init(scene, parent)
     SceneGraphNode.__init(self, false, scene, parent)
     -- These are not to be accessed directly, but via .x and .y
     -- Look down the file for properties
@@ -14,8 +14,6 @@ function SceneObject:__init(scene, parent, ...)
     
     self.id = nil
     self.tags = {}
-    
-    self:initialize(...)
 end
 
 
@@ -31,13 +29,15 @@ function SceneObject:addComponent(ComponentType, ...)
             not self._components[tid], 
             "Attempt to add a second unique component to object"
         )
-        component = ComponentType(self, ...)
+        component = ComponentType(self)
         self._components[tid] = component
     else
-        component = ComponentType(self, ...)
-        self._components[tid] = self._components[tid] or {}
+        component = ComponentType(self)
+        self._components[tid] = self._components[tid] or itable()
         self._components[tid][component] = component
     end
+    
+    component:initialize(...)
     
     self.scene:_registerComponent(component)
     

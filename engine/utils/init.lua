@@ -59,3 +59,6 @@ function str(obj, pretty_mode, max_depth, _depth, _visited)
         return "<" .. (tostring(obj) or "userdata/unknown") .. ">"
     end
 end
+
+-- A function that throws an error
+function unimplemented() error("Unimplemented function called", 2) end

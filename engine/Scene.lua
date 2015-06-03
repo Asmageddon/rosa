@@ -40,7 +40,7 @@ end
 -- Register/unregister components
 function Scene:_registerComponent(component)
     local tid = component.__class.type_id
-    self._components_index[tid] = self._components_index[tid] or {}
+    self._components_index[tid] = self._components_index[tid] or itable()
     self._components_index[tid][component] = component
 end
 

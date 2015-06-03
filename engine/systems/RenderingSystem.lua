@@ -8,7 +8,7 @@ end
 
 function RenderingSystem:draw()
     self.camera:set()
-    for _, drawable in pairs(self.scene:getComponents(BaseDrawable)) do
+    for _, drawable in ipairs(self.scene:getComponents(BaseDrawable)) do
         drawable:draw()
     end
     self.camera:unset()

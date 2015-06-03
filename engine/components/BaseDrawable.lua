@@ -3,9 +3,9 @@ local BaseDrawable = BaseBehavior:extends()
 BaseDrawable.unique = false
 BaseDrawable.type_id = "BaseDrawable"
 
-function BaseDrawable:__init(...)
+function BaseDrawable:__init(object)
     error_check(self.__class ~= BaseDrawable, "Cannot instantiate BaseDrawable")
-    BaseComponent.__init(self, ...)
+    BaseBehavior.__init(self, object)
     
     self.offset_x = 0
     self.offset_y = 0

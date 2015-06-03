@@ -3,9 +3,9 @@ local BaseBehavior = BaseComponent:extends()
 BaseBehavior.unique = false
 BaseBehavior.type_id = "BaseBehavior"
 
-function BaseBehavior:__init(...)
+function BaseBehavior:__init(object)
     error_check(self.__class ~= BaseBehavior, "Cannot instantiate BaseBehavior class")
-    BaseComponent.__init(self, ...)
+    BaseComponent.__init(self, object)
     self._enabled = false
     self:enable()
 end

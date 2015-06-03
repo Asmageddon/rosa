@@ -3,7 +3,7 @@ local SceneGraphNode = class()
 function SceneGraphNode:__init(is_scene, scene, parent, ...)
     -- Child objects
     self._children = {
-        all = {},
+        all = itable(),
         by_id = {},
         by_class = {},
         by_tag = {}
@@ -22,16 +22,16 @@ function SceneGraphNode:addChild(ObjectType, ...)
     )
     local object
     if self._is_scene then
-        object = ObjectType(self, nil, ...)
+        object = ObjectType(self, nil)
     else
-        object = ObjectType(self._scene, self, ...)
+        object = ObjectType(self._scene, self)
     end
     
     -- Store object in "all objects" table
     self._children.all[object] = object
     
     -- Store object by its type
-    self._children.by_class[ObjectType] = self._children.by_class[ObjectType] or {}
+    self._children.by_class[ObjectType] = self._children.by_class[ObjectType] or itable()
     self._children.by_class[ObjectType][object] = object
     
     -- Store object by its ID
@@ -45,11 +45,13 @@ function SceneGraphNode:addChild(ObjectType, ...)
     
     -- Store object by its tags
     for _, tag in ipairs(object.tags) do
-        self._children.by_tag[tag] = self._children.by_tag[tag] or {}
+        self._children.by_tag[tag] = self._children.by_tag[tag] or itable()
         self._children.by_tag[tag][object] = object
     end
     
     object._parent = self
+    
+    object:initialize(...)
     
     return object
 end
@@ -66,7 +68,7 @@ function SceneGraphNode:removeChild(object)
     end
     
     for _, tag in ipairs(object.tags) do
-        self._children.by_tag[tag] = self._children.by_tag[tag] or {}
+        self._children.by_tag[tag] = self._children.by_tag[tag] or itable()
         self._children.by_tag[tag][object] = nil
     end
     

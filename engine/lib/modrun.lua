@@ -61,6 +61,9 @@ modrun.base_handlers = {
     quit = love.handlers.quit,
 
     dispatch = nop,
+    load = function(arg)
+        if love.load then love.load(arg) end
+    end,
     draw = function()
         if love.draw then love.draw() end
     end,
@@ -153,7 +156,7 @@ function modrun.run()
     end
 
     if love.event then love.event.pump() end
-    if love.load then love.load(arg) end
+    modrun.dispatch("load", arg)
     -- We don't want the first frame's dt to include time taken by love.load.
     if love.timer then love.timer.step() end
 

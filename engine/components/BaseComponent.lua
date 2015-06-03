@@ -3,10 +3,8 @@ local BaseComponent = class()
 BaseComponent.unique = false
 BaseComponent.type_id = "BaseComponent"
 
-function BaseComponent:__init(object, ...)
+function BaseComponent:__init(object)
     self._object = object
-    
-    self:initialize(...)
 end
 
 function BaseComponent:initialize()

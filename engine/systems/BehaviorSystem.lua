@@ -8,7 +8,7 @@ end
 
 function BehaviorSystem:update(dt)
     local behaviors = self.scene:getComponents(Behavior)
-    for _, b in pairs(behaviors) do
+    for _, b in ipairs(behaviors) do
         if b.is_enabled then
             b:update(dt)
         end

@@ -79,7 +79,24 @@ local function dispatchEvent(event, ...)
     sceneman.dispatchEvent(event, ...)
 end
 
+local function onLoad(arg)
+    if arg[#arg] == "-profile" then
+        ProFi = require(p.."lib.ProFi")
+        ProFi:start()
+    end
+end
+local function onQuit()
+    if ProFi then
+		ProFi:stop()
+        local filename = string.format("%s/profiling_report_%s.txt", projman.current_project, os.time())
+		ProFi:writeReport(filename)
+    end
+end
+
 runman.addCallback("dispatch", dispatchEvent)
+runman.addCallback("load", onLoad)
+runman.addCallback("quit", onQuit)
+
 
 -- TODO: Think about using external modules, e.g.:
 --     GUI:

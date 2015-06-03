@@ -96,13 +96,6 @@ end
 
 -- Returns points in world coordinates
 function PhysicsShape:getPoints()
-    --local result = {}
-    --local points = self._shape:getPoints()
-    --for i=0,#points/2-1 do
-        --local x, y = points[i*2+1], points[i*2+2]
-        --local wx, wy = 
-    --end
-    --return self._body:getWorldPoints(  )
     return self._body:getWorldPoints(self._shape:getPoints())
 end
 
