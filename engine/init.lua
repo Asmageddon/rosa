@@ -7,7 +7,6 @@ runman = require(p.."lib.modrun").setup()
 
 -- Miscellaneous utilities
 require(p.."utils") 
-Color = require(p.."Color")
 
 -- Class system
 class = require(p.."lib.30log-llama")
@@ -17,9 +16,11 @@ tween = require(p.."lib.flux.flux")
 
 
 -- Base types
-Camera = require(p.."Camera")
 Scene = require(p.."Scene")
 SceneObject = require(p.."SceneObject")
+
+-- Subtypes
+Camera = require(p.."Camera")
 
 -- Components
 BaseComponent = require(p.."components.BaseComponent")

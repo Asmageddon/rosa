@@ -9,6 +9,8 @@ require(up.."table-mixins")
 
 require(up.."collections")
 
+Color = require(up.."Color")
+
 -- Check if condition is true, and if not, throw an error from the calling function
 --     condition: any - if it evaluates to true, error will be thrown
 --     message: string - error message that will be thrown

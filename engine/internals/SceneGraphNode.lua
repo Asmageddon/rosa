@@ -26,6 +26,9 @@ function SceneGraphNode:addChild(ObjectType, ...)
     else
         object = ObjectType(self._scene, self)
     end
+    object._parent = self
+    
+    object:initialize(...)
     
     -- Store object in "all objects" table
     self._children.all[object] = object
@@ -49,9 +52,6 @@ function SceneGraphNode:addChild(ObjectType, ...)
         self._children.by_tag[tag][object] = object
     end
     
-    object._parent = self
-    
-    object:initialize(...)
     
     return object
 end
