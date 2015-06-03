@@ -7,44 +7,52 @@ function PhysicsBody:initialize(body_type, density)
     self._density = density or 1
     -- TODO: Contemplate possibility of having multiple worlds
     local world = self.object.scene.systems[PhysicsSystem.type_id].world
+    local transform = self.object:getComponent(Transform)
     
-    self._body = love.physics.newBody(world, self.object.x, self.object.y, body_type)
-    self._body:setAngle(self.object.angle)
+    self._body = love.physics.newBody(world, transform.x, transform.y, body_type)
+    self._body:setAngle(transform.rotation)
     
     -- Overwrite position getters/setters
-    self.object.getX = function(obj)
+    transform.getX = function(obj)
         return self._body:getX()
     end
-    self.object.setX = function(obj, value)
+    transform.setX = function(obj, value)
         return self._body:setX(value)
     end
-    self.object.getY = function(obj)
+    transform.getY = function(obj)
         return self._body:getY()
     end
-    self.object.setY = function(obj, value)
+    transform.setY = function(obj, value)
         return self._body:setY(value)
     end
-    self.object.getAngle = function(obj)
+    transform.getRotation = function(obj)
         return self._body:getAngle()
     end
-    self.object.setAngle = function(obj, value)
+    transform.setRotation = function(obj, value)
         return self._body:setAngle(value)
     end
+    
+    transform.getScaleX = function(obj) return 1.0 end
+    transform.setScaleX = unimplemented
+    transform.getScaleY = function(obj) return 1.0 end
+    transform.setScaleY = unimplemented
 end
 
 function PhysicsBody:destroy()
-    -- Restore original SceneObject position getters/setters
-    self.object.getX = nil
-    self.object.setX = nil
-    self.object.getY = nil
-    self.object.setY = nil
-    self.object.getAngle = nil
-    self.object.setAngle = nil
+    local transform = self.object:getComponent(Transform)
+    
+    -- Restore original Transform getters/setters
+    transform.getX = nil
+    transform.setX = nil
+    transform.getY = nil
+    transform.setY = nil
+    transform.getAngle = nil
+    transform.setAngle = nil
     
     -- Save position and angle
-    self.object._x = self._body:getX()
-    self.object._y = self._body:getY()
-    self.object._angle = self._body:getAngle()
+    transform.x = self._body:getX()
+    transform.y = self._body:getY()
+    transform.angle = self._body:getAngle()
     
     -- TODO: Destroy PhysicsShape components first
     self._body:destroy()

@@ -9,9 +9,9 @@ function BaseDrawable:__init(object)
     
     self.offset_x = 0
     self.offset_y = 0
-    self.angle = 0
-    self.scale_x = 1.0
-    self.scale_y = 1.0
+    self.rotation = 0
+    self.sx = 1.0
+    self.sy = 1.0
 end
 
 function BaseDrawable:draw() end

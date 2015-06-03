@@ -2,6 +2,7 @@ local color_by_name = {
     red = {255, 0, 0, 255},
     green = {0, 255, 0, 255},
     blue = {0, 0, 255, 255},
+    white = {255, 255, 255, 255}
 }
 
 local function Color(color, ...)

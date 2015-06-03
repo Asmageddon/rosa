@@ -1,7 +1,7 @@
 local Platform = SceneObject:extends()
 
-function Platform:initialize(x, y, angle)
-    self.x = x; self.y = y; self.angle = angle or 0
+function Platform:initialize(x, y, rotation)
+    self:addComponent(Transform, x, y, rotation)
     
     self:addComponent(Drawable)
     

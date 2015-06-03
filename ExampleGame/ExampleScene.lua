@@ -16,6 +16,12 @@ function ExampleScene:initialize()
     self.red_apple = self:addChild(Apple, 0, -280, "red")
     self.green_apple = self:addChild(Apple, 20, -240, "green")
     
+    self.apples = {}
+    for i=1,20 do
+        local x, y = math.random(-400, 400), math.random(-800, -400)
+        table.insert(self.apples, self:addChild(Apple, x, y))
+    end
+    
     self:addChild(Platform, 0, 0)
     self:addChild(Platform, 100, 180, -0.4)
     self:addChild(Platform, -170, 140, 0.8)

@@ -25,6 +25,8 @@ SceneObject = require(p.."SceneObject")
 BaseComponent = require(p.."components.BaseComponent")
 BaseBehavior = require(p.."components.BaseBehavior")
 
+Transform = require(p.."components.Transform")
+
 PhysicsBody = require(p.."components.PhysicsBody")
 PhysicsShape = require(p.."components.PhysicsShape")
 

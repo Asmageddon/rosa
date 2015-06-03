@@ -4,14 +4,16 @@ function Sprite:initialize(path)
     self._path = path
     self._image = resman.getImage(path)
     self._color = {255, 255, 255, 255}
+    self._transform = self.object:getComponent(Transform)
 end
 
 function Sprite:draw()
     love.graphics.setColor(unpack(self._color))
+    local t = self._transform
     love.graphics.draw(self._image, 
-        self.object.x, self.object.y,
-        self.object.angle + self.angle,
-        self.scale_x, self.scale_y,
+        t.x, t.y,
+        t.rotation + self.rotation,
+        t.sx * self.sx, t.sy * self.sy,
         self.offset_x, self.offset_y
     )
 end
