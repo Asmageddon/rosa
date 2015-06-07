@@ -26,7 +26,7 @@ end
 function scene_manager.dispatchEvent(event, ...)
     if not scene_manager._scene then return end
     
-    for _, system in pairs(scene_manager._scene.systems) do
+    for _, system in ipairs(scene_manager._scene.systems) do
         if system[event] ~= nil then
             system[event](system, ...)
         end

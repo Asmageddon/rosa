@@ -6,7 +6,7 @@ function Scene:__init(...)
     SceneGraphNode.__init(self, true)
     self._layers = {"default"}
     
-    self._systems = {}
+    self._systems = itable()
     
     -- TODO: Optimize this to use an array-backed map
     self._components_index = {}
