@@ -62,5 +62,13 @@ function str(obj, pretty_mode, max_depth, _depth, _visited)
     end
 end
 
+pprint = function(...)
+    local r = {}
+    for _, v in ipairs({...}) do
+        table.insert(r, str(v))
+    end
+    print(unpack(r))
+end
+
 -- A function that throws an error
 function unimplemented() error("Unimplemented function called", 2) end
