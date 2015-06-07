@@ -27,6 +27,7 @@ modrun.known_events = {
     "quit",
 
     "pre_quit", "update", "draw", "dispatch", -- NOT love events
+    "pre_update", "post_update",
 }
 
 modrun.base_handlers = {
@@ -61,6 +62,8 @@ modrun.base_handlers = {
     quit = love.handlers.quit,
 
     dispatch = nop,
+    pre_update = nop,
+    post_update = nop,
     load = function(arg)
         if love.load then love.load(arg) end
     end,
@@ -188,7 +191,11 @@ function modrun.run()
         end
 
         -- Call update and draw
+        modrun.dispatch("pre_update", modrun.dt) -- will pass 0 if love.timer is disabled
+        if love.timer then modrun.dt = love.timer.getDelta() end
         modrun.dispatch("update", modrun.dt) -- will pass 0 if love.timer is disabled
+        if love.timer then modrun.dt = love.timer.getDelta() end
+        modrun.dispatch("post_update", modrun.dt) -- will pass 0 if love.timer is disabled
 
         if love.window and love.graphics and love.window.isCreated() then
             love.graphics.clear()

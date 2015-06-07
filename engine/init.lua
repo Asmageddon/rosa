@@ -72,11 +72,11 @@ local function dispatchEvent(event, ...)
         mouse.mousereleased(...)
     elseif event == "mousemoved" then
         mouse.mousemoved(...)
-    elseif event == "update" then
+    elseif event == "pre_update" then
+        tween.update(...)
+    elseif event == "post_update" then
         keyboard.update(...)
         mouse.update(...)
-        
-        tween.update(...)
     end
     
     sceneman.dispatchEvent(event, ...)
