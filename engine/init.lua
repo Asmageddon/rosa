@@ -31,9 +31,9 @@ Transform = require(p.."components.Transform")
 PhysicsBody = require(p.."components.PhysicsBody")
 PhysicsShape = require(p.."components.PhysicsShape")
 
+Renderable = require(p.."components.Renderable")
 BaseDrawable = require(p.."components.BaseDrawable")
-Drawable = require(p.."components.Drawable")
-Sprite = require(p.."components.Sprite")
+ImageDrawable = require(p.."components.ImageDrawable")
 
 -- Systems
 BaseSystem = require(p.."systems.BaseSystem")

@@ -84,6 +84,8 @@ function PhysicsShape:initialize(shape_type, ...)
     
     self._body = self.object:getComponent(PhysicsBody)
     self._fixture = love.physics.newFixture(self._body.body, self._shape, self._body.density)
+    
+    self._fixture:setUserData(self.object)
 end
 
 function PhysicsShape:destroy()

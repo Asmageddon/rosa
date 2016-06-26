@@ -21,7 +21,7 @@ modrun.known_events = {
 
     "mousepressed", "mousereleased", "mousemoved", "mousefocus",
     "keypressed", "keyreleased",
-    "textedit", "textinput",
+    "textedited", "textinput",
 
     "threaderror",
     "quit",
@@ -54,7 +54,7 @@ modrun.base_handlers = {
     keypressed = love.handlers.keypressed,
     keyreleased = love.handlers.keyreleased,
 
-    textedit = love.handlers.textedit,
+    textedited = love.handlers.textedited,
     textinput = love.handlers.textinput,
 
     threaderror = love.handlers.threaderror,

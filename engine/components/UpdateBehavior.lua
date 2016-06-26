@@ -10,7 +10,7 @@ end
 
 function UpdateBehavior:update(dt)
     if self.enabled then
-        self.func(self.object, unpack(self._args))
+        self.func(self.object, dt, unpack(self._args))
     end
 end
 

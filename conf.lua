@@ -1,5 +1,6 @@
 function love.conf(t)
-    t.version = "0.9.1"
+    t.version = "0.10.1"
+    t.window.msaa = 8
     t.console = true
 
     t.window.title = "Engingo"
@@ -9,5 +10,5 @@ function love.conf(t)
     t.window.borderless = false
     t.window.resizable = true
 
-    t.window.vsync = true
+    t.window.vsync = false
 end

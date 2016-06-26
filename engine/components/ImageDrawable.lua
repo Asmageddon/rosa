@@ -1,13 +1,13 @@
-local Sprite = BaseDrawable:extends()
+local ImageDrawable = BaseDrawable:extends()
 
-function Sprite:initialize(path)
+function ImageDrawable:initialize(path)
     self._path = path
     self._image = resman.getImage(path)
     self._color = {255, 255, 255, 255}
-    self._transform = self.object:getComponent(Transform)
+    self._transform = self.object:getComponent(Transform) -- Cache for performance
 end
 
-function Sprite:draw()
+function ImageDrawable:draw()
     love.graphics.setColor(unpack(self._color))
     local t = self._transform
     love.graphics.draw(self._image, 
@@ -18,16 +18,16 @@ function Sprite:draw()
     )
 end
 
-function Sprite:setColor(...)
+function ImageDrawable:setColor(...)
     self._color = {Color(...)}
 end
 
-function Sprite:getColor()
+function ImageDrawable:getColor()
     return self._color
 end
 
-Sprite:property("image", function(self) return self._image end)
-Sprite:property("color", "getColor", "setColor")
+ImageDrawable:property("image", function(self) return self._image end)
+ImageDrawable:property("color", "getColor", "setColor")
 -- TODO: Change image by changing its path
 
-return Sprite
+return ImageDrawable
