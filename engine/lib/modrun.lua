@@ -23,6 +23,7 @@
 --  * An FPS limiter
 --  * Ability to add and enable/disable event callbacks
 --  * Short-circuiting subsequent callbacks, by returning true from them, e.g. to capture input to UI
+--  * Maintains one copy of the module only, preventing errors should multiple libraries include their own copy
 --
 -- The library adds the following new events:
 --  * pre_quit() - An event that runs before quit, and can be used to stop the program from terminating
@@ -39,6 +40,11 @@
 --  * modrun.enableCallback(event, callback) - Enables a callback
 --  * modrun.disableCallback(event, callback) - Disables a callback, preventing it from being processed
 --  * modrun.setFramerateLimit(fps) - Set maximum FPS to the given value. Pass 0 or false to disable the limit. Only applies if vsync is disabled
+
+-- Only one instance of modrun can exist, if it is to function right
+if __modrun_singleton then
+    return __modrun_singleton
+end
 
 local modrun = {}
 
@@ -272,9 +278,10 @@ function modrun.setup()
 end
 
 modrun._DESCRIPTION = 'An alternative run function module for Love2D with support for callbacks and additional events'
-modrun._VERSION     = 'modrun v1.0.0'
+modrun._VERSION     = 'modrun v1.0.1'
 modrun._URL         = 'http://github.com/Asmageddon/modrun'
 modrun._LICENSE     = 'MIT LICENSE <http://www.opensource.org/licenses/mit-license.php>'
 
+__modrun_singleton = modrun
 
 return modrun
